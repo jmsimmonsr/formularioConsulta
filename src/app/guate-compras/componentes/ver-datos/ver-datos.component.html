@@ -1,0 +1,137 @@
+
+<!-- Categorias -->
+<br><br>
+<div *ngIf="this.paginas[0].valor" class="container col-xs-12 col-sm-5 col-lg-6">
+    <h1><label>{{this.servicio.CATEGORIAS.NOMBRE_CAMPO}}</label></h1>
+
+    <div class="container">
+      <table class="table table-striped">
+        <tbody>
+          <tr *ngFor="let c of this.servicio.CATEGORIAS.Data" >
+             <td scope="row">{{c.NOMBRE}}</td>
+             <td><input type="checkbox" [checked]="c.SELECCIONADO" (change)="selecciarCategorias(c)"></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-primary" (click)="paginaActiva(this.paginas[1].nombre)">Siguiente -></button>
+    </div>
+</div>
+
+<!-- modalidades -->
+<div *ngIf="this.paginas[1].valor" class="container col-xs-12 col-sm-5 col-lg-6">
+  <h1><label>{{this.servicio.MODALIDADES.NOMBRE_CAMPO}}</label></h1>
+
+  <div class="container">
+    <table class="table table-striped">
+      <tbody>
+        <tr *ngFor="let c of this.servicio.MODALIDADES.Data" >
+           <td scope="row">{{c.NOMBRE}}</td>
+           <td><input type="checkbox" [checked]="c.SELECCIONADO" (change)="seleccionarModalidades(c)"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" (click)="paginaActiva(this.paginas[0].nombre)"><- Atras </button>
+    <button type="button" class="btn btn-primary" (click)="paginaActiva(this.paginas[2].nombre)">Siguiente -></button>
+  </div>
+</div>
+
+<!-- estatus concurso -->
+<div *ngIf="this.paginas[2].valor" class="container col-xs-12 col-sm-5 col-lg-6">
+  <h1><label>{{this.servicio.ESTATUS_CONCURSO.NOMBRE_CAMPO}}</label></h1>
+
+  <div class="container">
+    <table class="table table-striped">
+      <tbody>
+        <tr *ngFor="let c of this.servicio.ESTATUS_CONCURSO.Data" >
+           <td scope="row">{{c.NOMBRE}}</td>
+           <td><input type="checkbox" [checked]="c.SELECCIONADO" (change)="seleccionarEstatusConcurso(c)"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" (click)="paginaActiva(this.paginas[1].nombre)"><- Atras </button>
+    <button type="button" class="btn btn-primary" (click)="paginaActiva(this.paginas[3].nombre)">Siguiente -></button>
+  </div>
+</div>
+
+<!-- generales -->
+<div *ngIf="this.paginas[3].valor" class="container col-xs-12 col-sm-5 col-lg-6">
+  <h1><label>Generales</label></h1>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label"><span class="text-danger">*</span>Entidad</label>
+    <div class="col-sm-9">
+        <div class="input-group flex-container">
+            <select [(ngModel)]="this.tipoEntidad" class="form-control fill-width">
+              <option *ngFor="let p of this.servicio.TIPO_ENTIDAD.Data" [ngValue]="p.TIPO_ENTIDAD">{{p.NOMBRE}}</option>
+            </select>
+        </div>
+    </div>
+  </div>
+    <br>
+
+    <div class="row">
+      <div class="col-xs-12 col-12 col-md-4 form-group">
+        <label class="col-sm-8 control-label"><span class="text-danger">*</span>Fecha Inicio</label>
+        <input type="text"
+          placeholder="Fecha Inicio"
+          class="form-control"
+          bsDatepicker
+          [bsValue]="this.fechaInicio"
+          [daysDisabled]="[6,0]"
+          [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY' }">
+      </div>
+
+      <div class="col-xs-12 col-12 col-md-4 form-group">
+        <label class="col-sm-8 control-label"><span class="text-danger">*</span>Fecha Fin</label>
+        <input type="text"
+          placeholder="Fecha Fin"
+          class="form-control"
+          bsDatepicker
+          [bsValue]="this.fechaFin"
+          [daysDisabled]="[6,0]"
+          [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY' }">
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-xs-12 col-12 col-md-4 form-group">
+        <label class="col-sm-8 control-label"><span class="text-danger">*</span>NOG:</label>
+        <input type="number" [(ngModel)]="this.nog" class="form-control col-sm-8" placeholder="NOG" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+    </div>
+
+    <br>
+    <button type="button" class="btn btn-primary" (click)="paginaActiva(this.paginas[2].nombre)"><- Atras </button>
+    <button type="button" class="btn btn-success" (click)="enviarFormulario()">Buscar</button>
+
+</div>
+
+
+<!-- ver resultados -->
+<div *ngIf="this.paginas[4].valor" class="container col-xs-12 col-sm-5 col-lg-6">
+  <h1><label>Resultados de Busqueda</label></h1>
+
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">NOG</th>
+          <th scope="col">Estatus Concurso</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Modalidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of this.resultado.Data" >
+           <td scope="row">{{c.NOG_CONCURSO }}</td>
+           <td scope="row">{{c.ESTATUS_CONCURSO }}</td>
+           <td scope="row">{{c.DESCRIPCION }}</td>
+           <td scope="row">{{c.MODALIDAD }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" (click)="nuevaBusqueda()">Nueva Busqueda</button>
+  </div>
+</div>
